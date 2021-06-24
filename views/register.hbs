@@ -1,9 +1,9 @@
 <main>
-    <form action="" method="">
+    <form action="/auth/register" method="POST">
         <h2>Register</h2>
         <div class="on-dark">
             <label for="username">Username:</label>
-            <input type="text" placeholder="Steven" value="">
+            <input type="text" placeholder="Steven" value="{{userData.username}}">
         </div>
 
         <div class="on-dark">
@@ -11,7 +11,7 @@
             <input type="password" placeholder="********" value="">
         </div>
 
-        <div class="on-dark">
+        <div class="on-dark"></div>
             <label for="repeatPassword">Repeat Password:</label>
             <input type="password" placeholder="********" value="">
         </div>

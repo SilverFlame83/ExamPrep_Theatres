@@ -4,7 +4,8 @@ async function createUser(username, hashedPassword) {
     //TODO adapt properties to project requirments
     const user = new User({
         username,
-        hashedPassword
+        hashedPassword,
+        likedPlays:[]
     });
 
     user.save();
