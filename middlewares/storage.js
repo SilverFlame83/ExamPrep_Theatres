@@ -1,5 +1,7 @@
-module.exports = () => (req,res,next)=>{
-    //TODO import and decorate services
+const playService = require('../services/play');
 
-    req.storage = {}
+module.exports = () => (req,res,next)=>{
+    req.storage = {
+        ...playService
+    }
 }
