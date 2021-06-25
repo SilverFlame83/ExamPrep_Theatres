@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const {isUser} = require('../middlewares/guards');
 const { parseError } = require('../util/parser');
 
@@ -32,6 +33,22 @@ router.post('/create', isUser(), async (req,res)=>{
             }
         }
         res.render('play/create', ctx);
+    }
+});
+
+router.get('/details/:id', async(req,res)=>{
+    try{
+        const play = await req.storage.getPlayById(req.params.id);
+  
+        play.hasUser = Boolean(req.user);
+        play.isAuthor = req.user && req.user._id == play.author;
+        play.liked = req.user&& play.usersLiked.includes(req.user._id);
+
+        res.render('play/details', {play});
+
+    }catch(err){
+        console.log(err.message)
+        res.render('/404')
     }
 });
 

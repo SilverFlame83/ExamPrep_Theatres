@@ -5,11 +5,11 @@ async function getAllPlays(){
 }
 
 async function getPlayById(id){
-    
+    return Play.findById(id).populate('usersLiked').lean();
 }
 
 async function createPlay(playData){
-    const pattern = newRegExp(`^${playData.title}$`, 'i');
+    const pattern = new RegExp(`^${playData.title}$`, 'i');
     const existing = await Play.find({title: {$regex:pattern}});
 
     if(existing){
