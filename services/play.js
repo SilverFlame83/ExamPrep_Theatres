@@ -10,7 +10,7 @@ async function getPlayById(id){
 
 async function createPlay(playData){
     const pattern = new RegExp(`^${playData.title}$`, 'i');
-    const existing = await Play.find({title: {$regex:pattern}});
+    const existing = await Play.findOne({title: {$regex:pattern}});
 
     if(existing){
         throw new Error('A play with this name already exist!')
@@ -22,12 +22,19 @@ async function createPlay(playData){
     return play;
 }
 
-async function editPlay(id,play){
-    
+async function editPlay(id,playData){
+    const play = await Play.findById(id);
+
+    play.title = playData.title;
+    play.description = playData.description;
+    play.imageUrl = playData.imageUrl;
+    play.public = Boolean (playData.public);
+
+    return play.save();
 }
 
 async function deletePlay(id){
-
+    return Play.findByIdAndDelete(id);
 }
 
 module.exports = {
