@@ -39,16 +39,16 @@ router.post('/create', isUser(), async (req, res) => {
 router.get('/details/:id', async (req, res) => {
     try {
         const play = await req.storage.getPlayById(req.params.id);
-
+        play.likes = play.usersLiked.length;
         play.hasUser = Boolean(req.user);
         play.isAuthor = req.user && req.user._id == play.author;
-        play.liked = req.user && play.usersLiked.includes(req.user._id);
+        //play.liked = req.user && play.usersLiked.find(u => u._id == req.user._id);
 
         res.render('play/details', { play });
 
     } catch (err) {
         console.log(err.message)
-        res.render('404')
+        res.redirect('/404')
     }
 });
 
@@ -60,7 +60,8 @@ router.get('/edit/:id',isUser(), async(req,res)=>{
         }
         res.render('play/edit', {play})
     }catch(err){
-
+       console.log(err.message)
+        res.redirect('/play/edit/'+ req.params.id)
     }
 });
 
